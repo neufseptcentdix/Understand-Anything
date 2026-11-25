@@ -88,6 +88,17 @@ describe("IgnoreFilter", () => {
       expect(filter.isIgnored(".idea/workspace.xml")).toBe(true);
       expect(filter.isIgnored(".vscode/settings.json")).toBe(true);
     });
+
+    it("ignores secrets, keys, and generated graph directories by default while allowing .env.example", () => {
+      const filter = createIgnoreFilter(testDir);
+      expect(filter.isIgnored(".env")).toBe(true);
+      expect(filter.isIgnored(".env.local")).toBe(true);
+      expect(filter.isIgnored("certs/server.pem")).toBe(true);
+      expect(filter.isIgnored("secrets/tls.key")).toBe(true);
+      expect(filter.isIgnored(".ua/knowledge-graph.json")).toBe(true);
+      expect(filter.isIgnored(".understand-anything/knowledge-graph.json")).toBe(true);
+      expect(filter.isIgnored(".env.example")).toBe(false);
+    });
   });
 
   describe("createIgnoreFilter with user .understandignore", () => {

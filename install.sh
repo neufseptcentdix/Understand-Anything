@@ -9,16 +9,16 @@
 #   ./install.sh --help
 #
 # Curl-pipe usage:
-#   curl -fsSL https://raw.githubusercontent.com/Egonex-AI/Understand-Anything/main/install.sh | bash
-#   curl -fsSL https://raw.githubusercontent.com/Egonex-AI/Understand-Anything/main/install.sh | bash -s codex
+#   curl -fsSL https://raw.githubusercontent.com/neufseptcentdix/Understand-Anything/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/neufseptcentdix/Understand-Anything/main/install.sh | bash -s codex
 #
 # Environment:
-#   UA_REPO_URL  Override clone URL (default: official GitHub repo)
+#   UA_REPO_URL  Override clone URL (default: this fork)
 #   UA_DIR       Override clone destination (default: $HOME/.understand-anything/repo)
 
 set -euo pipefail
 
-REPO_URL="${UA_REPO_URL:-https://github.com/Egonex-AI/Understand-Anything.git}"
+REPO_URL="${UA_REPO_URL:-https://github.com/neufseptcentdix/Understand-Anything.git}"
 REPO_DIR="${UA_DIR:-$HOME/.understand-anything/repo}"
 PLUGIN_LINK="$HOME/.understand-anything-plugin"
 

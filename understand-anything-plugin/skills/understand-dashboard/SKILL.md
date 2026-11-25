@@ -107,17 +107,18 @@ Start the Understand Anything dashboard to visualize the knowledge graph for the
    DASHBOARD_DIR="$PLUGIN_ROOT/packages/dashboard"
    ```
 
-4. **Fast path — try the prebuilt viewer first (no install, no build).** Each release ships a self-contained viewer tarball; run it pinned to the installed plugin version:
+4. **Fast path — use the locally built viewer if available (no remote tarball downloads).**
    ```bash
    : "${PLUGIN_ROOT:?Run step 3 first so PLUGIN_ROOT is set}"
    : "${PROJECT_DIR:?Run step 1 first so PROJECT_DIR is set}"
-   PLUGIN_VERSION=$(node -p "require('$PLUGIN_ROOT/package.json').version")
-   VIEWER_URL="https://github.com/Egonex-AI/Understand-Anything/releases/download/v${PLUGIN_VERSION}/understand-anything-viewer.tgz"
-   npx --yes "$VIEWER_URL" "$PROJECT_DIR"
+   LOCAL_VIEWER="$PLUGIN_ROOT/packages/viewer/bin/viewer.mjs"
+   if [ -f "$LOCAL_VIEWER" ] && [ -d "$PLUGIN_ROOT/packages/viewer/dist" ]; then
+     node "$LOCAL_VIEWER" "$PROJECT_DIR"
+   fi
    ```
-   Run this in the background. It prints the same `🔑  Dashboard URL` line as the dev server:
+   Run this in the background when the local viewer build is present. It prints the same `🔑  Dashboard URL` line as the dev server:
    - If the line appears, **skip steps 5-6** and continue at step 7.
-   - If the process exits without printing it (no release asset for this version, or no network), fall back to steps 5-6.
+   - If the local viewer has not been built yet, fall back to steps 5-6 (local Vite dev server).
 
 5. Fallback: install dependencies and build if needed:
    ```bash
@@ -156,7 +157,7 @@ Start the Understand Anything dashboard to visualize the knowledge graph for the
 
 ## Notes
 
-- The fast path (step 4) downloads a version-pinned, self-contained viewer from the GitHub release — nothing is installed into the plugin directory and no build runs
+- The fast path (step 4) runs the locally built viewer from `$PLUGIN_ROOT/packages/viewer` — no remote release tarball is downloaded or executed
 - The dashboard auto-opens in the default browser (both the viewer and Vite's `--open`)
 - If port 5173 is already in use, the next available port is picked (both paths)
 - In the fallback, the `GRAPH_DIR` environment variable tells the dev server where to find the knowledge graph

@@ -102,6 +102,12 @@ describe('PostToolUse auto-update hook', () => {
     expect(output.hookSpecificOutput.additionalContext).toContain(
       `${result.pluginRoot}/hooks/auto-update-prompt.md`,
     );
+    expect(output.hookSpecificOutput.additionalContext).toContain(
+      'Ask the user for confirmation',
+    );
+    expect(output.hookSpecificOutput.additionalContext).not.toContain(
+      'Do not ask the user for confirmation',
+    );
   });
 
   it.each(['commit', 'merge', 'cherry-pick', 'rebase'])(

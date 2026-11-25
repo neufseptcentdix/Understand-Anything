@@ -61,6 +61,18 @@ export const DEFAULT_IGNORE_PATTERNS: string[] = [
   ".idea/",
   ".vscode/",
 
+  // Generated graph artifacts & secrets
+  ".ua/",
+  ".understand-anything/",
+  ".env",
+  ".env.*",
+  "!.env.example",
+  "*.pem",
+  "*.key",
+  "*.p12",
+  "*.pfx",
+  "*.jks",
+
   // Misc
   "LICENSE",
   ".gitignore",
